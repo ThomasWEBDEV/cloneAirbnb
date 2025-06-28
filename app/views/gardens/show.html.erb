@@ -1,2 +1,46 @@
-<h1>Gardens#show</h1>
-<p>Find me in app/views/gardens/show.html.erb</p>
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-lg-8">
+      <!-- Image principale -->
+      <img src="https://picsum.photos/id/<%= rand(1..100) %>/800/400" class="img-fluid rounded mb-4" alt="<%= @garden.title %>">
+
+      <!-- Détails jardin -->
+      <h1><%= @garden.title %></h1>
+      <p class="text-muted"><i class="fas fa-map-marker-alt"></i> <%= @garden.address %></p>
+      <p class="lead"><%= @garden.description %></p>
+
+      <!-- Propriétaire -->
+      <div class="card mt-4">
+        <div class="card-body">
+          <h5>Proposé par <%= @garden.user.first_name %> <%= @garden.user.last_name %></h5>
+          <p>Membre depuis <%= @garden.user.created_at.strftime("%B %Y") %></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4">
+      <!-- Card réservation -->
+      <div class="card shadow">
+        <div class="card-body">
+          <h4 class="card-title"><%= @garden.price_per_day %>€ <small class="text-muted">/ jour</small></h4>
+
+          <% if user_signed_in? && current_user != @garden.user %>
+            <!-- Formulaire réservation -->
+            <%= simple_form_for [@garden, Booking.new] do |f| %>
+              <%= f.input :start_date, as: :date, html5: true, label: "Date de début" %>
+              <%= f.input :end_date, as: :date, html5: true, label: "Date de fin" %>
+              <%= f.input :price_per_day, as: :hidden, input_html: { value: @garden.price_per_day } %>
+              <%= f.submit "Réserver", class: "btn btn-primary w-100" %>
+            <% end %>
+          <% elsif user_signed_in? && current_user == @garden.user %>
+            <p class="text-center text-muted">C'est votre jardin !</p>
+            <%= link_to "Modifier", edit_garden_path(@garden), class: "btn btn-outline-primary w-100" %>
+          <% else %>
+            <p class="text-center">Connectez-vous pour réserver</p>
+            <%= link_to "Se connecter", new_user_session_path, class: "btn btn-primary w-100" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

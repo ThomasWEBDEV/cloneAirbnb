@@ -1,2 +1,60 @@
-<h1>Dashboard#index</h1>
-<p>Find me in app/views/dashboard/index.html.erb</p>
+<div class="container mt-4">
+  <h1>Mon tableau de bord</h1>
+
+  <div class="row mt-4">
+    <!-- Mes jardins -->
+    <div class="col-lg-6 mb-4">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">Mes jardins (<%= @my_gardens.count %>)</h5>
+          <%= link_to "Publier un jardin", new_garden_path, class: "btn btn-sm btn-primary" %>
+        </div>
+        <div class="card-body">
+          <% if @my_gardens.any? %>
+            <% @my_gardens.each do |garden| %>
+              <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+                <div>
+                  <strong><%= garden.title %></strong>
+                  <br>
+                  <small class="text-muted"><%= garden.address %> • <%= garden.price_per_day %>€/jour</small>
+                </div>
+                <div>
+                  <%= link_to "Voir", garden_path(garden), class: "btn btn-sm btn-outline-primary" %>
+                </div>
+              </div>
+            <% end %>
+          <% else %>
+            <p class="text-muted">Vous n'avez publié aucun jardin pour le moment.</p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mes réservations -->
+    <div class="col-lg-6 mb-4">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">Mes réservations (<%= @my_bookings.count %>)</h5>
+          <%= link_to "Voir toutes", bookings_path, class: "btn btn-sm btn-outline-primary" %>
+        </div>
+        <div class="card-body">
+          <% if @my_bookings.any? %>
+            <% @my_bookings.limit(3).each do |booking| %>
+              <div class="border-bottom py-2">
+                <strong><%= booking.garden.title %></strong>
+                <br>
+                <small class="text-muted">
+                  Du <%= booking.start_date.strftime("%d/%m") %> au <%= booking.end_date.strftime("%d/%m") %>
+                  • <span class="badge bg-<%= booking.pending? ? 'warning' : 'success' %>"><%= booking.status.humanize %></span>
+                  • <%= booking.total_price %>€
+                </small>
+              </div>
+            <% end %>
+          <% else %>
+            <p class="text-muted">Vous n'avez fait aucune réservation pour le moment.</p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

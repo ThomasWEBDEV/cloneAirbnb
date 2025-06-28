@@ -1,2 +1,46 @@
-<h1>Bookings#index</h1>
-<p>Find me in app/views/bookings/index.html.erb</p>
+<div class="container mt-4">
+  <h1>Mes réservations</h1>
+
+  <div class="row mt-4">
+    <% if @bookings.any? %>
+      <% @bookings.each do |booking| %>
+        <div class="col-md-6 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-start mb-3">
+                <h5 class="card-title"><%= booking.garden.title %></h5>
+                <span class="badge bg-<%= booking.pending? ? 'warning' : booking.confirmed? ? 'success' : 'secondary' %>">
+                  <%= booking.status.humanize %>
+                </span>
+              </div>
+
+              <p class="text-muted mb-2">
+                <i class="fas fa-map-marker-alt"></i> <%= booking.garden.address %>
+              </p>
+
+              <p class="mb-2">
+                <strong>Du <%= booking.start_date.strftime("%d/%m/%Y") %> au <%= booking.end_date.strftime("%d/%m/%Y") %></strong>
+              </p>
+
+              <p class="mb-2">
+                <%= (booking.end_date - booking.start_date).to_i %> jours × <%= booking.price_per_day %>€
+              </p>
+
+              <h5 class="text-success">Total: <%= booking.total_price %>€</h5>
+
+              <div class="mt-3">
+                <%= link_to "Voir le jardin", garden_path(booking.garden), class: "btn btn-outline-primary" %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="col-12 text-center">
+        <h3>Aucune réservation pour le moment</h3>
+        <p>Découvrez nos jardins disponibles !</p>
+        <%= link_to "Voir les jardins", gardens_path, class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>
