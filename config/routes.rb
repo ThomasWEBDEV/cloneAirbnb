@@ -1,4 +1,14 @@
 Rails.application.routes.draw do
+  get 'bookings/index'
+  get 'bookings/create'
+  get 'gardens/index'
+  get 'gardens/show'
+  get 'gardens/new'
+  get 'gardens/create'
+  get 'gardens/edit'
+  get 'gardens/update'
+  get 'gardens/destroy'
+  get 'dashboard/index'
   devise_for :users
   root to: "pages#home"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
