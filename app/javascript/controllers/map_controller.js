@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
-import mapboxgl from 'mapbox-gl' // Don't forget this!
+import mapboxgl from 'mapbox-gl'
 
 export default class extends Controller {
   static values = {
@@ -17,6 +17,11 @@ export default class extends Controller {
 
     this.#addMarkersToMap()
     this.#fitMapToMarkers()
+
+    // Écouter les événements de recherche
+    document.addEventListener("map:center", (event) => {
+      this.#centerMap(event.detail.lat, event.detail.lng)
+    })
   }
 
   #addMarkersToMap() {
@@ -31,5 +36,13 @@ export default class extends Controller {
     const bounds = new mapboxgl.LngLatBounds()
     this.markersValue.forEach(marker => bounds.extend([ marker.lng, marker.lat ]))
     this.map.fitBounds(bounds, { padding: 70, maxZoom: 15, duration: 0 })
+  }
+
+  #centerMap(lat, lng) {
+    this.map.flyTo({
+      center: [lng, lat],
+      zoom: 14,
+      duration: 2000
+    })
   }
 }
