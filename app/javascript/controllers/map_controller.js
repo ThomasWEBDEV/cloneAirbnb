@@ -1,0 +1,48 @@
+import { Controller } from "@hotwired/stimulus"
+import mapboxgl from 'mapbox-gl'
+
+export default class extends Controller {
+  static values = {
+    apiKey: String,
+    markers: Array
+  }
+
+  connect() {
+    mapboxgl.accessToken = this.apiKeyValue
+
+    this.map = new mapboxgl.Map({
+      container: this.element,
+      style: "mapbox://styles/mapbox/streets-v10"
+    })
+
+    this.#addMarkersToMap()
+    this.#fitMapToMarkers()
+
+    // Écouter les événements de recherche
+    document.addEventListener("map:center", (event) => {
+      this.#centerMap(event.detail.lat, event.detail.lng)
+    })
+  }
+
+  #addMarkersToMap() {
+    this.markersValue.forEach((marker) => {
+      new mapboxgl.Marker()
+        .setLngLat([ marker.lng, marker.lat ])
+        .addTo(this.map)
+    })
+  }
+
+  #fitMapToMarkers() {
+    const bounds = new mapboxgl.LngLatBounds()
+    this.markersValue.forEach(marker => bounds.extend([ marker.lng, marker.lat ]))
+    this.map.fitBounds(bounds, { padding: 70, maxZoom: 15, duration: 0 })
+  }
+
+  #centerMap(lat, lng) {
+    this.map.flyTo({
+      center: [lng, lat],
+      zoom: 14,
+      duration: 2000
+    })
+  }
+}
