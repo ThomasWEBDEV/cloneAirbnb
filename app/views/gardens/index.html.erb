@@ -12,7 +12,19 @@
       <% @gardens.each do |garden| %>
         <div class="col-md-4 mb-4">
           <div class="card h-100">
-            <img src="https://picsum.photos/id/<%= rand(1..100) %>/400/200" class="card-img-top" alt="<%= garden.title %>">
+            <% if garden.photos.attached? %>
+              <%= cl_image_tag garden.photos.first.key,
+                              width: 400, height: 200, crop: :fill,
+                              class: "card-img-top",
+                              alt: garden.title %>
+              <% else %>
+              <div class="bg-light d-flex align-items-center justify-content-center card-img-top" style="height: 200px;">
+                <div class="text-center text-muted">
+                  <i class="fas fa-seedling fa-2x mb-2"></i>
+                  <small>Aucune photo</small>
+                </div>
+              </div>
+            <% end %>
             <div class="card-body d-flex flex-column">
               <h5 class="card-title"><%= garden.title %></h5>
               <p class="card-text text-muted"><%= garden.address %></p>
