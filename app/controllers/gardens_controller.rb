@@ -4,10 +4,21 @@ class GardensController < ApplicationController
 
   def index
     @gardens = Garden.all
+    # initialisation de la carte avec Mapbox
+    @markers = @gardens.geocoded.map do |garden|
+      {
+        lat: garden.latitude,
+        lng: garden.longitude,
+      }
+    end
   end
 
   def show
     # @garden déjà défini par set_garden
+    @marker = [{
+      lat: @garden.latitude,
+      lng: @garden.longitude
+    }] if @garden.geocoded?
   end
 
   def new
