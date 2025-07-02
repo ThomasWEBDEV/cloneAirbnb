@@ -28,6 +28,13 @@
                         label: "Prix par jour (€)",
                         placeholder: "ex: 50",
                         required: true %>
+
+            <%= f.input :photos,
+                        as: :file,
+                        input_html: { multiple: true },
+                        label: "Photos de votre jardin",
+                        hint: "Vous pouvez sélectionner plusieurs photos" %>
+
           </div>
         </div>
 
