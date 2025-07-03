@@ -13,6 +13,11 @@
                 input_html: { autocomplete: "family-name" } %>
     <%= f.input :email, required: true %>
 
+    <%= f.input :avatar,
+                as: :file,
+                label: "Photo de profil",
+                hint: "Formats acceptés : JPG, PNG" %>
+
     <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
       <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
     <% end %>
