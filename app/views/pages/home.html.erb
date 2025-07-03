@@ -16,6 +16,19 @@
     <% @featured_gardens.each do |garden| %>
       <div class="col-md-4 mb-4">
         <div class="card">
+          <% if garden.photos.attached? %>
+            <%= cl_image_tag garden.photos.first.key,
+                      width: 400, height: 200, crop: :fill,
+                      class: "card-img-top",
+                      alt: garden.title %>
+          <% else %>
+            <div class="bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+              <div class="text-center text-muted">
+                <i class="fas fa-seedling fa-2x mb-2"></i>
+                <p class="mb-0 small">Aucune photo</p>
+              </div>
+            </div>
+          <% end %>
           <div class="card-body">
             <h5 class="card-title"><%= garden.title %></h5>
             <p class="card-text"><%= garden.description %></p>
