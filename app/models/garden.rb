@@ -11,4 +11,12 @@ class Garden < ApplicationRecord
   # geolocation
   geocoded_by :address
   after_validation :geocode, if: :will_save_change_to_address?
+
+  # garden results in search bar
+  include PgSearch::Model
+  pg_search_scope :garden_search,
+  against: [ :title, :description ],
+  using: {
+    tsearch: {prefix: true}
+  }
 end

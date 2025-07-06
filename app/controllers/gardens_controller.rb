@@ -62,4 +62,13 @@ class GardensController < ApplicationController
   def garden_params
     params.require(:garden).permit(:title, :description, :address, :price_per_day, photos: [])
   end
+
+  # Search bar on garden data
+  def search
+    if params[:query].present?
+      @gardens = Garden.garden_search(params[:query])
+    else
+      @gardens = Garden.all
+    end
+  end
 end
