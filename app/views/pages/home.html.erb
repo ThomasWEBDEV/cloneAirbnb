@@ -7,16 +7,30 @@
     <div class="banner-card position-absolute">
       <h1>Envie de verdure ?</h1>
       <p>La location d'espaces verts entre particuliers.</p>
-      <%= form_with url: gardens_path, method: :get, class: "home-search-form mt-3", role: "search" do %>
-        <div class="mb-2">
-          <%= text_field_tag :query, params[:query], placeholder: "Rechercher un jardin", class: "form-control home-search-input" %>
-        </div>
-        <div>
-          <button type="submit" class="btn home-search-button w-100">
-            <i class="fas fa-search me-2"></i> Rechercher
-          </button>
-        </div>
-      <% end %>
+        <%= form_with url: gardens_path, method: :get, class: "home-search-form mt-3", role: "search" do %>
+          <div class="mb-2">
+            <%= text_field_tag :query, params[:query], placeholder: "Mot-clé (ex : piscine, potager...)", class: "form-control home-search-input mb-2" %>
+
+            <%= text_field_tag :location, params[:location], placeholder: "Ville ou code postal", class: "form-control home-search-input mb-2" %>
+
+            <div class="d-flex gap-2">
+              <div class="w-50">
+                <label for="start_date" class="form-label small text-muted">Du</label>
+                <%= date_field_tag :start_date, params[:start_date], class: "form-control home-search-input" %>
+              </div>
+              <div class="w-50">
+                <label for="end_date" class="form-label small text-muted">Au</label>
+                <%= date_field_tag :end_date, params[:end_date], class: "form-control home-search-input" %>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <button type="submit" class="btn home-search-button w-100">
+              <i class="fas fa-search me-2"></i> Rechercher
+            </button>
+          </div>
+        <% end %>
     </div>
   </div>
 </div>
