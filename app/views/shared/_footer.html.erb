@@ -1,12 +1,24 @@
-<div class="footer">
-  <div class="footer-links">
+<footer class="footer-gardenbnb">
+  <div class="footer-container container d-flex flex-column align-items-center justify-content-center text-center">
 
-    <a href="https://github.com/RebeccaClaydon/gardenbnb"><i class="fab fa-github"></i></a>
-    <a href="#"><i class="fab fa-instagram"></i></a>
-    <a href="#"><i class="fab fa-facebook"></i></a>
-    <a href="#"><i class="fab fa-linkedin"></i></a>
+    <div class="footer-links mb-2">
+      <%= link_to "Confidentialité", "#", class: "footer-link" %>
+      <%= link_to "Conditions générales", "#", class: "footer-link" %>
+      <%= link_to "Plan du site", "#", class: "footer-link" %>
+      <%= link_to "Fonctionnement du site", "#", class: "footer-link" %>
+      <%= link_to "Infos sur l'entreprise", "#", class: "footer-link" %>
+    </div>
+
+    <div class="footer-social mb-2">
+      <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" class="social-link"><i class="fab fa-x-twitter"></i></a>
+      <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+      <a href="#" class="social-link"><i class="fab fa-pinterest-p"></i></a>
+    </div>
+
+    <div class="footer-copyright">
+      &copy; 2025 GardenBnB SAS
+    </div>
+
   </div>
-  <div class="footer-copyright">
-    This footer is made with <i class="fas fa-heart"></i> at Le Wagon
-  </div>
-</div>
+</footer>
