@@ -1,35 +1,35 @@
-<div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
-  <div class="container-fluid">
-    <%= link_to root_path, class: "navbar-brand me-4" do %>
-      <%= image_tag "logo.png", alt: "GardenBnb" %>
-    <% end %>
+<div class="navbar-lewagon navbar navbar-expand-sm navbar-light">
+  <div class="container-fluid d-flex flex-column align-items-center navbar-content">
+    <!-- Ligne 1 : Logo + Menu + Avatar -->
+    <div class="navbar-row d-flex w-100 align-items-center position-relative">
+      <!-- Logo (gauche) -->
+      <div class="navbar-left">
+        <%= link_to root_path, class: "navbar-brand" do %>
+          <%= image_tag "logo-gardenbnb.png", alt: "GardenBnb", class: "navbar-logo" %>
+        <% end %>
+      </div>
 
-    <!-- Barre de recherche bien large -->
-    <%= form_with url: gardens_path, method: :get, class: "search-form", role: "search" do %>
-      <%= text_field_tag :query, params[:query],
-            class: "form-control me-2", placeholder: "Rechercher un jardin" %>
-      <%= submit_tag "Chercher", name: "", class: "btn btn-primary btn-lg" %>
-    <% end %>
+      <!-- Liens centraux -->
+      <div class="navbar-center position-absolute start-50 translate-middle-x">
+        <ul class="navbar-nav flex-row gap-4">
+          <li class="nav-item">
+            <%= link_to "Jardins", gardens_path, class: "nav-link" %>
+          </li>
+          <% if user_signed_in? %>
+            <li class="nav-item">
+              <%= link_to "Tableau de bord", dashboard_path, class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Publier un jardin", new_garden_path, class: "nav-link" %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
 
-    <!-- Bouton burger menu -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <!-- Menu déroulant -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <%= link_to "Jardins", gardens_path, class: "nav-link" %>
-        </li>
+      <!-- Avatar (droite) -->
+      <div class="navbar-right ms-auto d-flex align-items-center">
         <% if user_signed_in? %>
-          <li class="nav-item">
-            <%= link_to "Tableau de bord", dashboard_path, class: "nav-link" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "Publier un jardin", new_garden_path, class: "nav-link" %>
-          </li>
-          <li class="nav-item dropdown">
+          <div class="nav-item dropdown">
             <a href="#" class="avatar" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <% if current_user.avatar.attached? %>
                 <%= image_tag current_user.avatar, class: "avatar", alt: "dropdown menu" %>
@@ -41,16 +41,22 @@
               <%= link_to "Mon profil", edit_user_registration_path, class: "dropdown-item" %>
               <%= link_to "Déconnexion", destroy_user_session_path, data: { turbo_method: :delete }, class: "dropdown-item" %>
             </div>
-          </li>
-        <% else %>
-          <li class="nav-item">
-            <%= link_to "Connexion", new_user_session_path, class: "nav-link" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "Inscription", new_user_registration_path, class: "nav-link" %>
-          </li>
+          </div>
         <% end %>
-      </ul>
+      </div>
     </div>
+
+    <!-- Ligne 2 : Search bar -->
+    <div class="w-100 d-flex justify-content-center mt-2">
+      <%= form_with url: search_gardens_path, method: :get, class: "search-form", role: "search" do %>
+        <div class="input-group search-bar-container">
+          <%= text_field_tag :query, params[:query], placeholder: "Rechercher un jardin", class: "form-control search-input" %>
+          <button type="submit" class="btn search-button">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      <% end %>
+    </div>
+
   </div>
 </div>

@@ -15,7 +15,7 @@
   <div class="row">
     <% @featured_gardens.each do |garden| %>
       <div class="col-md-4 mb-4">
-        <div class="card">
+        <div class="card garden-card">
           <% if garden.photos.attached? %>
             <%= cl_image_tag garden.photos.first.key,
                       width: 400, height: 200, crop: :fill,
@@ -30,10 +30,10 @@
             </div>
           <% end %>
           <div class="card-body">
-            <h5 class="card-title"><%= garden.title %></h5>
+            <h5 class="card-title garden-card-title"><%= garden.title %></h5>
             <p class="card-text"><%= garden.description %></p>
             <p class="text-success"><strong><%= garden.price_per_day %>€/jour</strong></p>
-            <%= link_to "Voir détails", garden_path(garden), class: "btn btn-outline-primary" %>
+            <%= link_to "Voir détails", garden_path(garden), class: "btn btn-primary garden-card-btn" %>
           </div>
         </div>
       </div>
