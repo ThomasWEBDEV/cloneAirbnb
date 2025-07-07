@@ -53,6 +53,7 @@ gem "devise"
 
 gem "geocoder"
 gem "cloudinary"
+gem "pg_search" #advanced search bar
 
 group :development, :test do
   gem "dotenv-rails"

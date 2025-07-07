@@ -14,9 +14,12 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   # Dashboard utilisateur
   get "dashboard", to: "dashboard#index"
-    # Routes pour les jardins
+
+  # Routes pour les jardins + recherche + réservations imbriquées
   resources :gardens do
-    # Routes pour les réservations (nested dans gardens)
+    collection do
+      get :search  # <-- ajout de la route search
+    end
     resources :bookings, only: [:create]
   end
 
