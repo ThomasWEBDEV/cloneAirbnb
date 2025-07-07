@@ -2,12 +2,18 @@ class GardensController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_garden, only: [:show, :edit, :update, :destroy]
 
+  # Vérifications Pundit manuelles pour ce contrôleur seulement
+  after_action :verify_authorized, except: [:index]
+  after_action :verify_policy_scoped, only: [:index]
+
   def index
     if params[:query].present?
       @gardens = Garden.garden_search(params[:query])
     else
       @gardens = Garden.all
     end
+
+    @gardens = policy_scope(@gardens)
 
     @markers = @gardens.geocoded.map do |garden|
       {
@@ -26,6 +32,7 @@ class GardensController < ApplicationController
   end
 
   def show
+    authorize @garden
     # @garden déjà défini par set_garden
     @marker = [{
       lat: @garden.latitude,
@@ -35,11 +42,13 @@ class GardensController < ApplicationController
 
   def new
     @garden = Garden.new
+    authorize @garden
   end
 
   def create
     @garden = Garden.new(garden_params)
     @garden.user = current_user
+    authorize @garden
 
     if @garden.save
       redirect_to @garden, notice: 'Jardin créé avec succès!'
@@ -49,10 +58,12 @@ class GardensController < ApplicationController
   end
 
   def edit
+    authorize @garden
     # @garden déjà défini par set_garden
   end
 
   def update
+    authorize @garden
     if @garden.update(garden_params)
       redirect_to @garden, notice: 'Jardin mis à jour!'
     else
@@ -61,6 +72,7 @@ class GardensController < ApplicationController
   end
 
   def destroy
+    authorize @garden
     @garden.destroy
     redirect_to gardens_path, notice: 'Jardin supprimé!'
   end
