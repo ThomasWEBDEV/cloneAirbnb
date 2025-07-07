@@ -1,0 +1,44 @@
+.garden-card {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  }
+
+  .card-img-top {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+  }
+
+  .card-body {
+    padding: 1rem;
+  }
+}
+
+.garden-card-title {
+  color: #2d5a27;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.garden-card-btn {
+  background-color: #5c8a39;
+  border-color: #5c8a39;
+  color: white;
+  border-radius: 50px;
+  padding: 10px 24px;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    background-color: #006110;
+    border-color: #006110;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  }
+}
