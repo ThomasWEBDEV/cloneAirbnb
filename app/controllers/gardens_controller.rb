@@ -3,30 +3,40 @@ class GardensController < ApplicationController
   before_action :set_garden, only: [:show, :edit, :update, :destroy]
 
   def index
-    if params[:query].present?
-      @gardens = Garden.garden_search(params[:query])
-    else
-      @gardens = Garden.all
+    @gardens = Garden.all
+
+    # Recherche par mot-clé et localisation
+    if params[:query].present? || params[:location].present?
+      search_string = [params[:query], params[:location]].compact.join(" ")
+      @gardens = @gardens.garden_search(search_string)
     end
 
-    @markers = @gardens.geocoded.map do |garden|
-      {
-        lat: garden.latitude,
-        lng: garden.longitude
-      }
+    # Filtrage par dates de disponibilité
+    if params[:start_date].present? && params[:end_date].present?
+      start_date = Date.parse(params[:start_date])
+      end_date = Date.parse(params[:end_date])
+
+      @gardens = @gardens.select do |garden|
+        garden.bookings.none? do |booking|
+          booking_start = booking.start_date
+          booking_end = booking.end_date
+          (start_date <= booking_end) && (end_date >= booking_start)
+        end
+      end
     end
 
-    # initialisation de la carte avec Mapbox
-    @markers = @gardens.geocoded.map do |garden|
-      {
-        lat: garden.latitude,
-        lng: garden.longitude,
-      }
-    end
+    # Marqueurs Mapbox — corrigé pour éviter l’erreur sur Array
+    @markers = @gardens.map do |garden|
+      if garden.latitude && garden.longitude
+        {
+          lat: garden.latitude,
+          lng: garden.longitude
+        }
+      end
+    end.compact
   end
 
   def show
-    # @garden déjà défini par set_garden
     @marker = [{
       lat: @garden.latitude,
       lng: @garden.longitude
@@ -49,7 +59,6 @@ class GardensController < ApplicationController
   end
 
   def edit
-    # @garden déjà défini par set_garden
   end
 
   def update
