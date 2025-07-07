@@ -5,7 +5,7 @@
     <% end %>
 
     <!-- Barre de recherche bien large -->
-    <%= form_with url: search_gardens_path, method: :get, class: "d-flex flex-grow-1 me-4", role: "search" do %>
+    <%= form_with url: gardens_path, method: :get, class: "search-form", role: "search" do %>
       <%= text_field_tag :query, params[:query],
             class: "form-control me-2", placeholder: "Rechercher un jardin" %>
       <%= submit_tag "Chercher", name: "", class: "btn btn-primary btn-lg" %>

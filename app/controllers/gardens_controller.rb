@@ -3,7 +3,19 @@ class GardensController < ApplicationController
   before_action :set_garden, only: [:show, :edit, :update, :destroy]
 
   def index
-    @gardens = Garden.all
+    if params[:query].present?
+      @gardens = Garden.garden_search(params[:query])
+    else
+      @gardens = Garden.all
+    end
+
+    @markers = @gardens.geocoded.map do |garden|
+      {
+        lat: garden.latitude,
+        lng: garden.longitude
+      }
+    end
+
     # initialisation de la carte avec Mapbox
     @markers = @gardens.geocoded.map do |garden|
       {
@@ -61,14 +73,5 @@ class GardensController < ApplicationController
 
   def garden_params
     params.require(:garden).permit(:title, :description, :address, :price_per_day, photos: [])
-  end
-
-  # Search bar on garden data
-  def search
-    if params[:query].present?
-      @gardens = Garden.garden_search(params[:query])
-    else
-      @gardens = Garden.all
-    end
   end
 end

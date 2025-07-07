@@ -2,6 +2,9 @@
   <div class="col-12">
     <div class="d-flex justify-content-between align-items-center mb-4">
       <h1>Tous les jardins</h1>
+        <% if params[:query].present? %>
+          <p><strong><%= @gardens.count %></strong> jardin(s) trouvé(s) pour « <%= params[:query] %> »</p>
+        <% end %>
       <div style="width: 300px;">
         <div data-controller="address-autocomplete"
             data-address-autocomplete-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
