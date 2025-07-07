@@ -15,8 +15,8 @@ class Garden < ApplicationRecord
   # garden results in search bar
   include PgSearch::Model
   pg_search_scope :garden_search,
-  against: [ :title, :description ],
-  using: {
-    tsearch: {prefix: true}
-  }
+    against: [:title, :description, :address],
+    using: {
+      tsearch: { prefix: true }
+    }
 end
