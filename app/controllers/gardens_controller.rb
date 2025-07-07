@@ -4,6 +4,7 @@ class GardensController < ApplicationController
   # Vérifications Pundit manuelles pour ce contrôleur seulement
   after_action :verify_authorized, except: [:index]
   after_action :verify_policy_scoped, only: [:index]
+
   def index
   @gardens = Garden.all
 
@@ -31,22 +32,29 @@ class GardensController < ApplicationController
   @markers = @gardens.geocoded.map do |garden|
     {
       lat: garden.latitude,
-      lng: garden.longitude
+      lng: garden.longitude,
+      info_window_html: render_to_string(partial: "info_window", locals: {garden: garden}),
+      marker_html: render_to_string(partial: "marker", locals: {garden: garden})
     }
   end
 end
+
   def show
     authorize @garden
     # @garden déjà défini par set_garden
     @marker = [{
       lat: @garden.latitude,
-      lng: @garden.longitude
+      lng: @garden.longitude,
+      info_window_html: render_to_string(partial: "info_window", locals: {garden: @garden}),
+      marker_html: render_to_string(partial: "marker", locals: {garden: @garden})
     }] if @garden.geocoded?
   end
+
   def new
     @garden = Garden.new
     authorize @garden
   end
+
   def create
     @garden = Garden.new(garden_params)
     @garden.user = current_user
@@ -57,10 +65,12 @@ end
       render :new
     end
   end
+
   def edit
     authorize @garden
     # @garden déjà défini par set_garden
   end
+
   def update
     authorize @garden
     if @garden.update(garden_params)
@@ -69,15 +79,19 @@ end
       render :edit
     end
   end
+
   def destroy
     authorize @garden
     @garden.destroy
     redirect_to gardens_path, notice: 'Jardin supprimé!'
   end
+
   private
+
   def set_garden
     @garden = Garden.find(params[:id])
   end
+
   def garden_params
     params.require(:garden).permit(:title, :description, :address, :price_per_day, photos: [])
   end
