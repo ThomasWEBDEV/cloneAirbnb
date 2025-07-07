@@ -1,0 +1,6 @@
+<div class="info-window">
+  <h5><%= garden.title %></h5>
+  <p class="mb-1"><strong><%= garden.price_per_day %>€</strong> / jour</p>
+  <p class="mb-2 text-muted small"><%= truncate(garden.description, length: 80) %></p>
+  <%= link_to "Voir détails", garden_path(garden), class: "btn btn-primary btn-sm" %>
+</div>
