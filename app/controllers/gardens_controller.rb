@@ -4,6 +4,7 @@ class GardensController < ApplicationController
   # Vérifications Pundit manuelles pour ce contrôleur seulement
   after_action :verify_authorized, except: [:index]
   after_action :verify_policy_scoped, only: [:index]
+
   def index
   @gardens = Garden.all
 
@@ -32,17 +33,20 @@ class GardensController < ApplicationController
     {
       lat: garden.latitude,
       lng: garden.longitude,
-      info_window_html: render_to_string(partial: "info_window", locals: {garden: garden})
+      info_window_html: render_to_string(partial: "info_window", locals: {garden: garden}),
+      marker_html: render_to_string(partial: "marker", locals: {garden: garden})
     }
   end
 end
+
   def show
     authorize @garden
     # @garden déjà défini par set_garden
     @marker = [{
       lat: @garden.latitude,
       lng: @garden.longitude,
-      info_window_html: render_to_string(partial: "info_window", locals: {garden: @garden})
+      info_window_html: render_to_string(partial: "info_window", locals: {garden: @garden}),
+      marker_html: render_to_string(partial: "marker", locals: {garden: @garden})
     }] if @garden.geocoded?
   end
 
