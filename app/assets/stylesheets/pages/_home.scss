@@ -1,1 +1,73 @@
-// Specific CSS for your home-page
+.banner-wrapper {
+  background-color: #f9f9f9;
+  padding: 2rem 0;
+}
+
+.banner-section {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; // image à droite
+
+  .banner-image {
+    background: url("banner.jpg") center/cover no-repeat;
+    width: 70%;
+    height: 400px;
+    border-radius: 32px;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .banner-card {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate(0%, -50%);
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    max-width: 450px;
+    width: 100%;
+    z-index: 2;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+
+    h1 {
+      font-size: 2rem;
+      color: #2d5a27;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: #555;
+    }
+
+    .home-search-form {
+      margin-top: 1rem;
+
+      .home-search-input {
+        width: 100%;
+        border-radius: 0.25rem;
+        padding: 0.5rem 1rem;
+        border: 1px solid #ccc;
+      }
+
+      .home-search-button {
+        background-color: #2d5a27;
+        color: white;
+        border: none;
+        border-radius: 0.25rem;
+        padding: 0.5rem 1rem;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: #244d21;
+        }
+      }
+    }
+  }
+}
