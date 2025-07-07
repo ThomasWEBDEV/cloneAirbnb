@@ -4,10 +4,8 @@
   align-items: center;
   margin-top: 0 !important;
   padding-top: 0rem;
-  padding-bottom: 2rem;
   position: relative;
   z-index: 10;
-  min-height: 140px;
 
   // Dégradé radial centré
   background: radial-gradient(circle, #e0e0e0 0%, #f4f4f4 100%) !important;
@@ -18,7 +16,8 @@
 }
 
 .navbar-lewagon .navbar-brand img {
-  width: 80px;
+  width: 150px;
+  height: auto;
   border-radius: 10px;
 }
 
