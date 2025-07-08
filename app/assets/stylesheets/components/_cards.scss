@@ -1,31 +1,37 @@
-.garden-card {
+.card {
+  border: none;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-  transition: transform 0.2s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+  background-color: #fff;
 
   &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    transform: scale(1.02);
   }
 
   .card-img-top {
+    height: 200px;
+    object-fit: cover;
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
   }
 
   .card-body {
     padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
   }
 }
 
-.garden-card-title {
+.card-title {
   color: #2d5a27;
   font-weight: bold;
   font-size: 1.1rem;
 }
 
-.garden-card-btn {
+.btn-outline-primary {
   background-color: #5c8a39;
   border-color: #5c8a39;
   color: white;
@@ -34,6 +40,7 @@
   font-size: 1rem;
   transition: all 0.2s ease;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
 
   &:hover {
     background-color: #006110;
@@ -41,4 +48,10 @@
     transform: translateY(-1px);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
   }
+}
+
+.highlight {
+  border: 2px solid #198754;
+  box-shadow: 0 0 15px rgba(25, 135, 84, 0.4);
+  transition: box-shadow 0.3s ease;
 }
