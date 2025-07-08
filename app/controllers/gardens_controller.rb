@@ -15,6 +15,16 @@ class GardensController < ApplicationController
 
   @gardens = policy_scope(@gardens)
 
+  # Marqueurs Mapbox - UNE SEULE fois
+  @markers = @gardens.geocoded.map do |garden|
+    {
+      lat: garden.latitude,
+      lng: garden.longitude,
+      info_window_html: render_to_string(partial: "info_window", locals: {garden: garden}),
+      marker_html: render_to_string(partial: "marker", locals: {garden: garden})
+    }
+  end
+
   # Filtrage par dates de disponibilité
   if params[:start_date].present? && params[:end_date].present?
     start_date = Date.parse(params[:start_date])
@@ -26,16 +36,6 @@ class GardensController < ApplicationController
         (start_date <= booking_end) && (end_date >= booking_start)
       end
     end
-  end
-
-  # Marqueurs Mapbox - UNE SEULE fois
-  @markers = @gardens.geocoded.map do |garden|
-    {
-      lat: garden.latitude,
-      lng: garden.longitude,
-      info_window_html: render_to_string(partial: "info_window", locals: {garden: garden}),
-      marker_html: render_to_string(partial: "marker", locals: {garden: garden})
-    }
   end
 end
 
