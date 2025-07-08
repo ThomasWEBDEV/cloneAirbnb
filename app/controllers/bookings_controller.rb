@@ -13,10 +13,13 @@ class BookingsController < ApplicationController
     @booking.status = :pending
 
     if @booking.save
-      @booking.update(status: :pending)
-      @booking.start_date = Date.parse(booking_params[:start_date])
-      @booking.end_date = Date.parse(booking_params[:end_date])
-      redirect_to bookings_path, notice: 'Votre réservation a été envoyée au propriétaire pour confirmation!'
+      @booking.update(
+        status: :pending,
+        start_date: Date.parse(booking_params[:start_date]),
+        end_date: Date.parse(booking_params[:end_date])
+      )
+
+      redirect_to bookings_path, notice: 'Votre réservation a été envoyée au propriétaire pour confirmation !'
     else
       redirect_to @garden, alert: 'Erreur lors de la réservation.'
     end
