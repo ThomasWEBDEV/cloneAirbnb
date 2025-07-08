@@ -2,34 +2,44 @@
 
 <h1>Mes Notifications</h1>
 
-<div class="row mt-4">
+  <div class="row mt-4">
+    <div class="card w-100">
+      <div class="card-body">
+      <ul class="list-unstyled">
+        <% @notifications.each do |notification| %>
+          <li class="mb-4 border-bottom pb-3" style="<%= 'font-weight: bold;' unless notification.read %>">
+            <% if notification.booking %>
+            <!--Message -->
+            <div class = "mb-2">
+              <%= link_to notification.message, booking_path(notification.booking) %>
+            </div>
 
-      <% @notifications.each do |notification| %>
-        <div class="card">
-          <div class="card-body">
-            <div class="d-flex justify-content-between align-items-start mb-3">
-
-        <li style="<%= 'font-weight: bold;' unless notification.read %>">
-          <% if notification.booking %>
-            <%= link_to notification.message, booking_path(notification.booking) %>
             <% booking = notification.booking %>
 
-            <% if booking.status == "pending" %>
-              <%= button_to "Confirm Booking", confirm_booking_path(booking), method: :patch, class: "btn btn-success" %>
-            <% else %>
-              <span>Status: <%= booking.status %></span>
-            <% end %>
-          <% else %>
-            <%= notification.message %>
-          <% end %>
+            <!-- Booking Status -->
 
-          <% unless notification.read %>
-            <%= button_to "Mark as read", mark_as_read_notification_path(notification), method: :patch %>
-          <% end %>
-        </li>
-  <% end %>
-</div>
-</div>
-</div>
+              <% if booking.status == "pending" %>
+                <%= button_to "Confirm Booking", confirm_booking_path(booking), method: :patch, class: "btn garden-card-btn my-2" %>
+              <% else %>
+              <div class="mb-2">
+                <span>Status: <%= booking.status %></span>
+                </div>
+              <% end %>
+            <% else %>
+            <div class = "mb-2">
+              <%= notification.message %>
+              </div>
+            <% end %>
+
+            <% unless notification.read %>
+
+              <%= button_to "Mark as read", mark_as_read_notification_path(notification), method: :patch, class: "btn garden-card-btn my-2" %>
+
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
 </div>
 </div>
