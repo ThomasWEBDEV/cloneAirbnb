@@ -1,6 +1,14 @@
 .navbar-lewagon {
-  justify-content: space-between;
-  background: white
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 0 !important;
+  padding-top: 0rem;
+  position: relative;
+  z-index: 10;
+
+  // Dégradé radial centré
+  background: radial-gradient(circle, #e0e0e0 0%, #f4f4f4 100%) !important;
 }
 
 .navbar-lewagon .navbar-collapse {
@@ -8,6 +16,85 @@
 }
 
 .navbar-lewagon .navbar-brand img {
-  width: 80px;
+  width: 150px;
+  height: auto;
   border-radius: 10px;
+}
+
+.btn-primary {
+  background-color: #2d5a27 !important;
+  border-color: #2d5a27 !important;
+  color: #fff;
+}
+
+.search-form {
+  width: 50vw;
+  margin-right: 1rem;
+
+  .search-bar-container {
+    display: flex;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 40px;
+    overflow: hidden;
+  }
+
+  .search-input {
+    border: none;
+    padding: 0.75rem 1rem;
+    border-radius: 40px 0 0 40px;
+    flex: 1;
+    font-size: 1rem;
+
+    &:focus {
+      outline: none;
+      box-shadow: none;
+    }
+  }
+
+  .search-button {
+    background-color: #2d5a27;
+    border: none;
+    color: white;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 6px 6px 6px 0;
+    transition: background 0.3s;
+
+    i {
+      font-size: 1rem;
+    }
+
+    &:hover {
+      background-color: #228b22;
+    }
+  }
+}
+
+.navbar-content {
+  padding: 1rem 2rem;
+
+  .navbar-brand img {
+    width: 200px;
+    height: auto;
+    border-radius: 10px;
+  }
+
+  ul.navbar-nav {
+    list-style: none;
+    padding-left: 0;
+
+    .nav-link {
+      font-weight: bold;
+      color: #333;
+      transition: color 0.2s;
+
+      &:hover {
+        color: #2d5a27;
+      }
+    }
+  }
 }

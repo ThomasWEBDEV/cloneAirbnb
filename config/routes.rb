@@ -1,22 +1,15 @@
 Rails.application.routes.draw do
-  get 'bookings/index'
-  get 'bookings/create'
-  get 'gardens/index'
-  get 'gardens/show'
-  get 'gardens/new'
-  get 'gardens/create'
-  get 'gardens/edit'
-  get 'gardens/update'
-  get 'gardens/destroy'
-  get 'dashboard/index'
   devise_for :users
   root to: "pages#home"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   # Dashboard utilisateur
   get "dashboard", to: "dashboard#index"
-    # Routes pour les jardins
+
+  # Routes pour les jardins + recherche + réservations imbriquées
   resources :gardens do
-    # Routes pour les réservations (nested dans gardens)
+    collection do
+      get :search  # <-- ajout de la route search
+    end
     resources :bookings, only: [:create]
   end
 

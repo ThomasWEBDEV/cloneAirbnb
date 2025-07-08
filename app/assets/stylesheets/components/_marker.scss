@@ -1,0 +1,38 @@
+.custom-marker {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .marker-price {
+    background: white;
+    border: 1.5px solid #222;
+    border-radius: 20px;
+    padding: 4px 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    white-space: nowrap;
+  }
+
+  .marker-icon {
+    color: #222;
+    font-size: 22px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+    transition: all 0.2s ease;
+  }
+
+  &:hover {
+    .marker-price {
+      background: #222;
+      color: white;
+      transform: scale(1.05);
+    }
+
+    .marker-icon {
+      transform: scale(1.1);
+    }
+  }
+}

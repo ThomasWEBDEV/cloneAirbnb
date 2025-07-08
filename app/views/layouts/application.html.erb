@@ -11,10 +11,17 @@
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
+    <!-- <p class="notice"><%= notice %></p>-->
     <p class="alert"><%= alert %></p>
-    <%= render "shared/navbar" %>
+
+    <% if current_page?(root_path) %>
+      <%= render "shared/navbar_home" %>
+    <% else %>
+      <%= render "shared/navbar" %>
+    <% end %>
+
     <%= yield %>
+
     <%= render "shared/footer" %>
   </body>
 </html>
