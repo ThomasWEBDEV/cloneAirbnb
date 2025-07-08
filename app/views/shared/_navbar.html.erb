@@ -8,7 +8,17 @@
           <%= image_tag "logo-gardenbnb.png", alt: "GardenBnb", class: "navbar-logo" %>
         <% end %>
       </div>
+  </div>
 
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <%= link_to "Jardins", gardens_path, class: "nav-link" %>
+          </li>
+            <% if user_signed_in? %>
+              <li class="nav-item">
+            <%= link_to "Tableau de bord", dashboard_path, class: "nav-link" %>
+          </li>
       <!-- Liens centraux -->
       <div class="navbar-center position-absolute start-50 translate-middle-x">
         <ul class="navbar-nav flex-row gap-4">

@@ -8,6 +8,8 @@ require "open-uri"
 puts "Cleaning database...."
 Garden.destroy_all
 User.destroy_all
+Booking.destroy_all
+Notification.destroy_all
 
 puts "Creating users...."
 jean = User.create!(

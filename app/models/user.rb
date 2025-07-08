@@ -6,6 +6,7 @@ class User < ApplicationRecord
 
   has_many :gardens, dependent: :destroy
   has_many :bookings, dependent: :destroy
+  has_many :notifications, dependent: :destroy
 
   # Avatar pour les utilisateurs
   has_one_attached :avatar
