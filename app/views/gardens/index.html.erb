@@ -38,7 +38,12 @@
         <% if @gardens.any? %>
           <% @gardens.each do |garden| %>
             <div class="col-lg-6 mb-4">
-              <%= link_to garden_path(garden), class: "text-decoration-none" do %>
+                  <%= link_to garden_path(garden),
+                class: "text-decoration-none",
+                data: {
+                  controller: "garden-card",
+                  garden_card_garden_id_value: garden.id
+                } do %>
                 <div class="card h-100">
                   <% if garden.photos.attached? %>
                     <%= cl_image_tag garden.photos.first.key,

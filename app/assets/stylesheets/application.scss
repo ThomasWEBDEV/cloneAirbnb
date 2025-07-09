@@ -20,3 +20,8 @@ html, body {
   margin: 0 !important;
   padding: 0 !important;
 }
+
+.mapbox-marker-highlighted {
+  filter: brightness(1.1) drop-shadow(0 0 25px rgb(255, 130, 130)) drop-shadow(0 0 15px rgb(255, 60, 60)) drop-shadow(0 0 10px rgba(255, 255, 255, 0.8)) !important;
+  transition: filter 0.2s ease !important;
+}
