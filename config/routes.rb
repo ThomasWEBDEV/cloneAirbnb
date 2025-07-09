@@ -32,4 +32,12 @@ Rails.application.routes.draw do
       patch :confirm
     end
   end
+
+  # Legal pages from the footer
+  get '/confidentiality', to: 'pages#confidentiality'
+  get '/terms', to: 'pages#terms'
+  get '/sitemap', to: 'pages#sitemap'
+  get '/how-it-works', to: 'pages#how_it_works'
+  get '/about-us', to: 'pages#about_us'
+
 end
