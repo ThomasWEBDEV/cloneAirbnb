@@ -15,6 +15,16 @@ class GardensController < ApplicationController
 
   @gardens = policy_scope(@gardens)
 
+  # Tri par prix
+  if params[:sort_by].present?
+    case params[:sort_by]
+    when 'price_asc'
+      @gardens = @gardens.order(:price_per_day)
+    when 'price_desc'
+      @gardens = @gardens.order(price_per_day: :desc)
+    end
+  end
+
   # Marqueurs Mapbox - UNE SEULE fois
   @markers = @gardens.geocoded.map do |garden|
     {
