@@ -1,4 +1,4 @@
-<div class="container mt-4">
+<div class="container mt-4 mb-5">
   <div class="row">
     <div class="col-lg-8">
       <!-- Image principale -->
@@ -16,16 +16,18 @@
         </div>
       <% end %>
 
-      <!-- Détails jardin -->
-      <h1><%= @garden.title %></h1>
-      <p class="text-muted"><i class="fas fa-map-marker-alt"></i> <%= @garden.address %></p>
-      <p class="lead"><%= @garden.description %></p>
+      <!-- Détails jardin avec largeur limitée -->
+      <div style="max-width: 800px;">
+        <h1><%= @garden.title %></h1>
+        <p class="text-muted"><i class="fas fa-map-marker-alt"></i> <%= @garden.address %></p>
+        <p class="lead"><%= @garden.description %></p>
 
-      <!-- Propriétaire -->
-      <div class="card mt-4">
-        <div class="card-body">
-          <h5>Proposé par <%= @garden.user.first_name %> <%= @garden.user.last_name %></h5>
-          <p>Membre depuis <%= @garden.user.created_at.strftime("%B %Y") %></p>
+        <!-- Propriétaire -->
+        <div class="card mt-4">
+          <div class="card-body">
+            <h5>Proposé par <%= @garden.user.first_name %> <%= @garden.user.last_name %></h5>
+            <p>Membre depuis <%= @garden.user.created_at.strftime("%B %Y") %></p>
+          </div>
         </div>
       </div>
     </div>
