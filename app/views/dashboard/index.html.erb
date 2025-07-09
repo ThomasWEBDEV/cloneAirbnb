@@ -40,14 +40,24 @@
         <div class="card-body">
           <% if @my_bookings.any? %>
             <% @my_bookings.limit(3).each do |booking| %>
-              <div class="border-bottom py-2">
-                <strong><%= booking.garden.title %></strong>
-                <br>
-                <small class="text-muted">
-                  Du <%= booking.start_date.strftime("%d/%m") %> au <%= booking.end_date.strftime("%d/%m") %>
-                  • <span class="badge bg-<%= booking.pending? ? 'warning' : 'success' %>"><%= booking.status.humanize %></span>
-                  • <%= booking.total_price %>€
-                </small>
+              <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+                <div>
+                  <strong><%= booking.garden.title %></strong>
+                  <br>
+                  <small class="text-muted">
+                    Du <%= booking.start_date.strftime("%d/%m") %> au <%= booking.end_date.strftime("%d/%m") %>
+                    • <span class="badge bg-<%= booking.pending? ? 'warning' : 'success' %>"><%= booking.status.humanize %></span>
+                    • <%= booking.total_price %>€
+                  </small>
+                </div>
+                <div>
+                  <%= link_to "Supprimer", booking_path(booking),
+                              class: "btn btn-sm btn-outline-danger",
+                              data: {
+                                turbo_method: :delete,
+                                turbo_confirm: "Êtes-vous sûr de vouloir supprimer cette réservation ?"
+                              } %>
+                </div>
               </div>
             <% end %>
           <% else %>

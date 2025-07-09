@@ -50,6 +50,14 @@ class BookingsController < ApplicationController
     redirect_to notifications_path
   end
 
+  def destroy
+    @booking = Booking.find(params[:id])
+    authorize_booking!
+
+    @booking.destroy
+    redirect_to dashboard_path, notice: 'Réservation supprimée avec succès!'
+  end
+
   private
 
   def booking_params
