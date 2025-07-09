@@ -1,53 +1,54 @@
 class GardensController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_garden, only: [:show, :edit, :update, :destroy]
-  # Vérifications Pundit manuelles pour ce contrôleur seulement
-  after_action :verify_authorized, except: [:index]
-  after_action :verify_policy_scoped, only: [:index]
+    before_action :authenticate_user!, except: [:index, :show]
+    before_action :set_garden, only: [:show, :edit, :update, :destroy]
+    # Vérifications Pundit manuelles pour ce contrôleur seulement
+    after_action :verify_authorized, except: [:index]
+    after_action :verify_policy_scoped, only: [:index]
 
-  def index
-  @gardens = Garden.all
+    def index
+    @gardens = Garden.all
 
-  if params[:query].present? || params[:location].present?
-    search_string = [params[:query], params[:location]].compact.join(" ")
-    @gardens = @gardens.garden_search(search_string)
-  end
-
-  @gardens = policy_scope(@gardens)
-
-  # Tri par prix
-  if params[:sort_by].present?
-    case params[:sort_by]
-    when 'price_asc'
-      @gardens = @gardens.order(:price_per_day)
-    when 'price_desc'
-      @gardens = @gardens.order(price_per_day: :desc)
+    if params[:query].present? || params[:location].present?
+      search_string = [params[:query], params[:location]].compact.join(" ")
+      @gardens = @gardens.garden_search(search_string)
     end
-  end
 
-  # Marqueurs Mapbox - UNE SEULE fois
-  @markers = @gardens.geocoded.map do |garden|
-    {
-      lat: garden.latitude,
-      lng: garden.longitude,
-      info_window_html: render_to_string(partial: "info_window", locals: {garden: garden}),
-      marker_html: render_to_string(partial: "marker", locals: {garden: garden})
-    }
-  end
+    @gardens = policy_scope(@gardens)
 
-  # Filtrage par dates de disponibilité
-  if params[:start_date].present? && params[:end_date].present?
-    start_date = Date.parse(params[:start_date])
-    end_date = Date.parse(params[:end_date])
-    @gardens = @gardens.select do |garden|
-      garden.bookings.none? do |booking|
-        booking_start = booking.start_date
-        booking_end = booking.end_date
-        (start_date <= booking_end) && (end_date >= booking_start)
+    # Tri par prix
+    if params[:sort_by].present?
+      case params[:sort_by]
+      when 'price_asc'
+        @gardens = @gardens.order(:price_per_day)
+      when 'price_desc'
+        @gardens = @gardens.order(price_per_day: :desc)
+      end
+    end
+
+    # Marqueurs Mapbox - UNE SEULE fois
+    @markers = @gardens.geocoded.map do |garden|
+      {
+        lat: garden.latitude,
+        lng: garden.longitude,
+        garden_id: garden.id,
+        info_window_html: render_to_string(partial: "info_window", locals: {garden: garden}),
+        marker_html: render_to_string(partial: "marker", locals: {garden: garden})
+      }
+    end
+
+    # Filtrage par dates de disponibilité
+    if params[:start_date].present? && params[:end_date].present?
+      start_date = Date.parse(params[:start_date])
+      end_date = Date.parse(params[:end_date])
+      @gardens = @gardens.select do |garden|
+        garden.bookings.none? do |booking|
+          booking_start = booking.start_date
+          booking_end = booking.end_date
+          (start_date <= booking_end) && (end_date >= booking_start)
+        end
       end
     end
   end
-end
 
   def show
     authorize @garden
