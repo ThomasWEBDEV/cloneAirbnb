@@ -10,7 +10,7 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+  <body class="d-flex flex-column" style="min-height: 100vh;">
     <!-- <p class="notice"><%= notice %></p>-->
     <p class="alert"><%= alert %></p>
 
@@ -25,8 +25,9 @@
     <% else %>
       <%= render "shared/navbar" %>
     <% end %>
-
+    <main class="flex-grow-1">>
     <%= yield %>
+    </main>
 
     <%= render "shared/footer" %>
   </body>
