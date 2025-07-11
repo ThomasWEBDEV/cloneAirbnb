@@ -82,7 +82,6 @@
           <% end %>
           <div class="card-body">
             <h5 class="card-title garden-card-title"><%= garden.title %></h5>
-            <p class="card-text"><%= garden.description %></p>
             <p class="text-success"><strong><%= garden.price_per_day %>€/jour</strong></p>
             <%= link_to "Voir détails", garden_path(garden), class: "btn btn-primary garden-card-btn" %>
           </div>
